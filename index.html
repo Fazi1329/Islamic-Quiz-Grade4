@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Surah Al-Fatiha: Meaning Challenge</title>
+  <meta name="description" content="An interactive Islamic educational quiz to help students memorize and understand the English meaning of all 7 verses of Surah Al-Fatiha." />
+  
+  <!-- Google Fonts: Amiri (Arabic), Outfit (Modern Latin typography), Scheherazade New -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400&family=Outfit:wght@300;400;500;600;700;800&family=Scheherazade+New:wght@400;600;700&display=swap" rel="stylesheet">
+  
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <!-- Header / Nav bar with quick controls -->
+  <header class="app-header">
+    <div class="header-inner">
+      <div class="brand">
+        <span class="brand-symbol">۞</span>
+        <div class="brand-text">
+          <span class="brand-title">Surah Al-Fatiha</span>
+          <span class="brand-subtitle">Meaning Challenge</span>
+        </div>
+      </div>
+      <div class="header-actions">
+        <button id="sound-toggle-btn" class="icon-btn" title="Toggle Sound Effects" aria-label="Toggle Sound Effects">
+          <span id="sound-icon">🔊</span>
+          <span class="btn-label">Sound</span>
+        </button>
+        <button id="teacher-mode-btn" class="icon-btn secondary-action" title="Teacher Settings & Translations" aria-label="Teacher Settings">
+          <span>⚙️</span>
+          <span class="btn-label">Teacher</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Container -->
+  <main class="main-container">
+
+    <!-- Screen 1: Welcome Screen -->
+    <section id="welcome-screen" class="view-screen active">
+      <div class="card hero-card">
+        <div class="islamic-arch-ornament">
+          <span class="arch-star">★</span>
+          <span class="arch-center">﷽</span>
+          <span class="arch-star">★</span>
+        </div>
+        
+        <h1 class="main-title">Surah Al-Fatiha: Meaning Challenge</h1>
+        <p class="subtitle">Understand every verse. Complete all seven. Earn your achievement!</p>
+        
+        <div class="intro-box">
+          <div class="intro-badge">✨ Student Mission</div>
+          <p class="intro-text">
+            Surah Al-Fatiha (The Opening) is recited in every unit of our daily prayers. In this interactive challenge, you will type the complete English meaning for all <strong>7 verses</strong> one at a time.
+          </p>
+          <ul class="rule-list">
+            <li><span class="bullet">✔</span> Read each Arabic verse carefully.</li>
+            <li><span class="bullet">✔</span> Type its complete English meaning in your own words or standard translation.</li>
+            <li><span class="bullet">✔</span> The intelligent checker evaluates your understanding and unlocks the next verse!</li>
+            <li><span class="bullet">✔</span> Reach Verse 7 to achieve the 100% Master Certificate.</li>
+          </ul>
+        </div>
+
+        <div class="hero-actions">
+          <button id="start-btn" class="btn btn-primary btn-large">
+            <span>Bismillah — Start Quiz</span>
+            <span class="arrow-icon">→</span>
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Screen 2: Quiz Screen -->
+    <section id="quiz-screen" class="view-screen">
+      <!-- Status & Progress Dashboard -->
+      <div class="dashboard-bar">
+        <div class="progress-info">
+          <div class="verse-indicator">
+            <span class="badge-pill" id="verse-step-badge">Verse 1 of 7</span>
+            <span class="score-pill" id="score-display">Completed: <strong>0</strong> / 7</span>
+          </div>
+          <div class="progress-track" aria-label="Quiz progress">
+            <div id="progress-fill" class="progress-fill" style="width: 14.28%;"></div>
+          </div>
+          <div class="progress-steps-row" id="progress-steps-row">
+            <!-- 7 steps dynamically rendered -->
+          </div>
+        </div>
+      </div>
+
+      <!-- Verse Card -->
+      <div class="card quiz-card">
+        <div class="card-header">
+          <div class="verse-meta">
+            <span class="verse-tag" id="current-verse-tag">Verse 1</span>
+            <span class="surah-tag">Surah Al-Fatiha • The Opening</span>
+          </div>
+          <button id="listen-verse-btn" class="audio-btn" title="Listen to Verse Recitation">
+            <span class="audio-icon">▶</span>
+            <span class="audio-label">Listen</span>
+          </button>
+        </div>
+
+        <!-- Arabic Calligraphy Box -->
+        <div class="arabic-display-box">
+          <div class="arabic-ayah" id="arabic-verse" dir="rtl" lang="ar">
+            بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ
+          </div>
+          <div class="transliteration" id="verse-transliteration">
+            Bismillāhir-Raḥmānir-Raḥīm
+          </div>
+        </div>
+
+        <!-- Challenge Instruction & Input -->
+        <div class="challenge-body">
+          <label for="answer-input" class="instruction-label">
+            <span class="instruction-icon">✏️</span>
+            <span>Type the complete English meaning of this verse below:</span>
+          </label>
+          
+          <div class="textarea-wrapper">
+            <textarea 
+              id="answer-input" 
+              class="answer-textarea" 
+              rows="3" 
+              placeholder="e.g. In the name of Allah, the Most Compassionate, the Most Merciful..."
+              autocomplete="off"
+              autocorrect="off"
+              spellcheck="true"
+            ></textarea>
+            <div class="input-tools">
+              <span class="word-counter" id="word-counter">0 words</span>
+              <button id="clear-input-btn" class="text-link-btn" title="Clear text">Clear</button>
+            </div>
+          </div>
+
+          <!-- Dynamic Feedback Area -->
+          <div id="feedback-container" class="feedback-container hidden" role="alert">
+            <div class="feedback-icon" id="feedback-icon">💡</div>
+            <div class="feedback-content">
+              <h4 id="feedback-title" class="feedback-title">Feedback</h4>
+              <p id="feedback-message" class="feedback-message">Let's check your meaning.</p>
+              <div id="missing-clauses-box" class="missing-clauses-box hidden"></div>
+            </div>
+          </div>
+
+          <!-- Quiz Action Buttons -->
+          <div class="button-bar">
+            <button id="submit-btn" class="btn btn-primary">
+              <span class="btn-text">Submit Answer</span>
+              <span class="btn-shortcut">(or press Enter)</span>
+            </button>
+            
+            <button id="next-verse-btn" class="btn btn-gold hidden">
+              <span>Next Verse</span>
+              <span class="arrow-icon">→</span>
+            </button>
+            
+            <button id="reset-btn" class="btn btn-outline" title="Start over">
+              <span>Reset Quiz</span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Screen 3: Completion / Victory Screen -->
+    <section id="completion-screen" class="view-screen">
+      <div class="card celebration-card">
+        <canvas id="confetti-canvas"></canvas>
+        
+        <div class="celebration-badge">
+          <span>🏆</span>
+        </div>
+        
+        <h1 class="celebration-title">🎉 WELL DONE! 🎉</h1>
+        <h2 class="celebration-ayah-heading">
+          “MashaAllah! You have successfully completed all 7 verses of Surah Al-Fatiha!”
+        </h2>
+        
+        <p class="celebration-desc">
+          “You demonstrated your understanding of the meaning of every verse. Keep learning, keep practising, and keep growing in your knowledge of the Qur'an.”
+        </p>
+
+        <!-- Score & Achievement card -->
+        <div class="achievement-box">
+          <div class="score-circle">
+            <span class="score-number">7/7</span>
+            <span class="score-percent">100%</span>
+          </div>
+          <div class="achievement-details">
+            <div class="achievement-title">Surah Al-Fatiha Meaning Master</div>
+            <div class="achievement-sub">All 7 Ayahs understood & verified</div>
+            <div class="progress-track" style="margin-top: 10px;">
+              <div class="progress-fill" style="width: 100%;"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Completion Buttons -->
+        <div class="celebration-actions">
+          <button id="review-btn" class="btn btn-primary btn-large">
+            <span>📋 Review My Answers</span>
+          </button>
+          <button id="retry-btn" class="btn btn-outline btn-large">
+            <span>🔄 Try Again</span>
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Screen 4: Review Answers Screen -->
+    <section id="review-screen" class="view-screen">
+      <div class="card review-card">
+        <div class="card-header">
+          <div>
+            <h2 class="main-title" style="margin-bottom: 4px;">Review Your Answers</h2>
+            <p class="subtitle" style="text-align: left; margin: 0;">Compare your typed answers with the approved reference translations.</p>
+          </div>
+          <button id="review-back-btn" class="btn btn-outline">
+            <span>← Back</span>
+          </button>
+        </div>
+
+        <div id="review-items-container" class="review-items-list">
+          <!-- Dynamically populated review cards for all 7 verses -->
+        </div>
+
+        <div class="review-footer">
+          <button id="review-play-again-btn" class="btn btn-primary btn-large">
+            <span>Take Challenge Again</span>
+          </button>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Teacher Settings Modal -->
+  <div id="teacher-modal" class="modal-backdrop hidden" role="dialog" aria-modal="true" aria-labelledby="teacher-modal-title">
+    <div class="modal-box">
+      <div class="modal-header">
+        <h3 id="teacher-modal-title">⚙️ Teacher Settings & Custom Translations</h3>
+        <button id="close-teacher-modal" class="close-btn" aria-label="Close modal">&times;</button>
+      </div>
+      <div class="modal-body">
+        <p class="modal-desc">
+          Customize approved translations and grading strictness. All settings are saved locally for classroom use.
+        </p>
+
+        <div class="teacher-options">
+          <label class="toggle-control">
+            <input type="checkbox" id="setting-allow-reveal" />
+            <span class="toggle-label">Allow students to reveal reference hint after 3 attempts</span>
+          </label>
+          <label class="toggle-control">
+            <input type="checkbox" id="setting-strict-mode" />
+            <span class="toggle-label">Strict spelling mode (require high similarity)</span>
+          </label>
+        </div>
+
+        <div class="teacher-verses-tabs" id="teacher-verses-tabs">
+          <!-- Verse 1 to 7 selector tabs -->
+        </div>
+
+        <div class="teacher-verse-editor" id="teacher-verse-editor">
+          <!-- Editor for current selected verse in teacher view -->
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button id="save-teacher-btn" class="btn btn-primary">Save Changes</button>
+        <button id="reset-translations-btn" class="btn btn-outline">Reset to Defaults</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Reset Confirmation Modal -->
+  <div id="reset-modal" class="modal-backdrop hidden" role="dialog" aria-modal="true">
+    <div class="modal-box small-modal">
+      <div class="modal-header">
+        <h3>Reset Quiz Progress?</h3>
+        <button id="close-reset-modal" class="close-btn">&times;</button>
+      </div>
+      <div class="modal-body">
+        <p>Are you sure you want to start over? All your current answers and score will be reset to Verse 1.</p>
+      </div>
+      <div class="modal-footer">
+        <button id="confirm-reset-btn" class="btn btn-danger">Yes, Reset Quiz</button>
+        <button id="cancel-reset-btn" class="btn btn-outline">Cancel</button>
+      </div>
+    </div>
+  </div>
+
+  <footer class="app-footer">
+    <div class="footer-content">
+      <p>Surah Al-Fatiha (The Opening) • 7 Verses (Ayāt) • Makkī Surah</p>
+      <p class="footer-sub">Designed for Islamic Education & Quranic Understanding</p>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
